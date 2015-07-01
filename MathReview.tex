@@ -1,0 +1,89 @@
+\documentclass[20pt,letterpaper]{article}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{fullpage}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage[margin=3cm]{geometry}
+
+\usepackage{setspace}
+\doublespacing
+\everymath{\displaystyle}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+\title{HW Template}
+
+% Edit these as appropriate
+\newcommand\course{COMP3711}
+\newcommand\semester{Spring 2014}  % <-- current semester
+\newcommand\profname{Timothy, Chan }  % <-- your name
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\course ( \profname )}
+\chead{\textbf{\Large Math Review}}
+\rhead{\today}
+\headsep 10pt
+
+\begin{document}
+
+{\bf Asymptotic Nontation:} \\
+$\Theta$  tight bound \\
+O  upper bound \\
+$\Omega$ lower bound \\
+o loose upper bound \\
+$\omega$ loose lower bound \\
+
+Def: let $f, g: \mathbb{N} \rightarrow \mathbb{R}$ \\
+1. $f(n) \in O(g(n)) \iff \exists\ c > 0 \ \exists\ n_0, \ s.t.\ \forall\ n \geq n_0, \ f(n) \leq cg(n) $ \\
+2. $f(n) \in \Omega(g(n)) \iff \exists\ c > 0 \ \exists\ n_0, \ s.t.\ \forall\ n \geq n_0, \ f(n) \leq cg(n) $ \\
+3. $f(n) \in \Theta(g(n)) \iff f(n) \in \Omega(g(n)), \ f(n) \in O(g(n)) $ \\
+4. $f(n) \in o(g(n)) \iff \forall\ c > 0 \ \exists\ n_0, \ s.t.\ \forall\ n \geq n_0, \ f(n) \leq cg(n) $ \\
+5. $f(n) \in \omega(g(n)) \iff \forall\ c > 0 \ \exists\ n_0, \ s.t.\ \forall\ n \geq n_0, \ f(n) \geq cg(n) $ \\
+
+e.g. \\
+$f(n)=2n^2+8n-10 \leq 2n^2+8n \leq 10n^2, \forall\ n \geq 1 $ \\
+$f(n)=2n^2+8n-10 \geq 2n^2-10 \geq n^2, \forall\ n \geq \sqrt{10} $ \\
+Thus, $2n^2+8n-10 \in \Theta(n^2) $ \\
+$f(n)=3n+2 \leq 4n, \forall\ n \geq 2, 4n \leq cn^2, \forall\ n \geq \frac{4}{c} $ \\
+Thus, $3n+2 \in o(n^2), \ n_0 = max\{2, \frac{4}{c}\} $ \\
+
+{\bf Facts (connection with limits)} \\
+let $h = \lim_{x \to \infty} \frac{f(n)}{g(n)}$, \ then: \\
+1. $f(n) \in o(g(n)) \iff h = 0 $ \\
+2. $f(n) \in \omega(g(n)) \iff h = \infty $ \\
+3. $f(n) \in O(g(n)) \iff h < \infty $ \\
+4. $f(n) \in \Omega(g(n)) \iff h > 0 $ \\
+
+e.g. Taking limits using L'Hopital's Rule \\
+$2^n \in \omega(n^2) \leftarrow \lim_{n \to \infty} \frac{2^n}{n^2} = \lim_{n \to \infty} \frac{2^n\ln2}{2n} =  \lim_{n \to \infty} \frac{2^n\ln2\ln2}{2} = \infty $ \\
+
+Ex. $f(n)$ \ vs \ $g(n)$ \\
+$1.01^n$ \ vs \ $n^{100}$ (exponential vs polynomial): $1.01^n = \omega(n^{100})$ \\
+$(\log n)^{100}$ \ vs \ $n^{0.01}$ (polylog vs polynomial): $(\log n)^{100} = o(n^{0.01})$ \\
+$n^3+\frac{2^n}{10}$ \ vs \ $n^2+\frac{3^n}{10}$ (drop lower order terms and constant factors): $n^3+\frac{2^n}{10} = o(n^2+\frac{3^n}{10})$ \\
+$n!$ \ vs \ $(n+1)!$ (factorial growth rate changes when $n \rightarrow n+1$): $n! = o((n+1)!)$ \\
+$2^{\log_{5}{n}}$ \ vs \ $2^{\log_{6}{n}}$ ($a^{\log_{b}{n}} = a^{\frac{\log_{a}{n}}{\log_{a}{b}}} = n^{\log_{b}{a}}$) \\
+$n$ \ vs \ $n^{1+\sin n}$ NONE! since $n^{1+\sin n}$ oscillates \\
+
+{\bf Commonly seen complexity: Good $\rightarrow$ Bad} \\
+$...n...n\log n...n^2...n^3...1.01^n...2^n...100^n...n!...$ \\
+Slower: $...100^n...n!...n^n...2^{n^2}...2^{n!}...2^{2^{2^{...}}}...$ \\
+Faster: $1...\log\log\log n...\log\log n...\log n...(\log n)^{100}...n^{0.01}...\sqrt n...n...$ \\
+
+
+$\log n! \in \Omega(n\log n)$ \\
+$2^{\sqrt{\log n}} \in o(n^{0.01})$ \ since $\lim_{n \to \infty} \frac{2^{\sqrt{\log n}}}{n^{0.01}} = \lim_{n \to \infty} \frac{2^{\sqrt{\log n}}}{2^{0.01\log n}} = \lim_{n \to \infty} 2^{\sqrt{\log n} - 0.01\log n} = 2^{-\infty} = 0$ \\
+
+Remark: asymptotic notations can be used in equations and interpreted from left to right. \\
+e.g. $n^2 = O(n^3) = O(n^4)$, \ $2n^3+3n+4 = 2n^3+ o(n^2) = O(n^3)$ \\
+
+{\bf Summations:} \\
+$\sum\limits_{i=1}^n i^d = \Theta(n^{d+1}) \ \forall\ d \geq 0$ \\
+$\sum\limits_{i=1}^n c^i = \frac{c^{n+1}-1}{c-1} = \Theta(c^n) \ \forall\ c \geq 1$ \\
+$\sum\limits_{i=1}^n \frac{1}{i} = \ln n + \Theta(1)$ (take integral)\\
+$\sum\limits_{i=1}^n \log i = \log n! = n\log n - \Theta(n)$ (take integral) \\
+
+\end{document}
