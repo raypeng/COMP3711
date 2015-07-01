@@ -4,7 +4,7 @@
 
 ### Topics covered:
 
-* Bentley's Algorithm
+* Bentley's Problem (Maximum subarray problem)
 * 3SUM
 * Math Review (Big-O stuff)
 * Sorting
